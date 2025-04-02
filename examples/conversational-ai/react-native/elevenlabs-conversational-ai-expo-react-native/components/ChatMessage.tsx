@@ -1,71 +1,42 @@
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 export type Message = {
-  source: string;
-  message: string;
+  id: string;
+  text: string;
+  sender: string;
+  timestamp: string;
 };
 
-type Props = {
-  message: Message;
-};
-
-export function ChatMessage({ message }: Props) {
-  const isAI = message.source === "ai";
-
+export default function ChatMessage({ message }: { message: Message }) {
   return (
-    <View
-      style={[
-        styles.messageContainer,
-        isAI ? styles.aiMessage : styles.userMessage,
-      ]}
-    >
-      <View style={[styles.bubble, isAI ? styles.aiBubble : styles.userBubble]}>
-        <Text
-          style={[styles.messageText, isAI ? styles.aiText : styles.userText]}
-        >
-          {message.message}
-        </Text>
+    <View style={styles.container}>
+      <View style={styles.messageContainer}>
+        <Text style={styles.messageText}>{message.text}</Text>
+        <Text style={styles.timestamp}>{message.timestamp}</Text>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  messageContainer: {
-    flexDirection: "row",
-    marginVertical: 8,
+  container: {
     paddingHorizontal: 16,
-    alignItems: "flex-end",
+    paddingVertical: 8,
+    width: "100%",
   },
-  aiMessage: {
-    justifyContent: "flex-start",
-  },
-  userMessage: {
-    justifyContent: "flex-end",
-  },
-  bubble: {
-    maxWidth: "70%",
+  messageContainer: {
+    backgroundColor: "#f0f0f0",
     padding: 12,
-    borderRadius: 20,
-    elevation: 1,
-  },
-  aiBubble: {
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderTopLeftRadius: 4,
-  },
-  userBubble: {
-    backgroundColor: "#3B82F6",
-    borderTopRightRadius: 4,
+    borderRadius: 12,
+    maxWidth: "80%",
   },
   messageText: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontFamily: "Inter-Regular",
+    fontSize: 16,
+    color: "#333",
+    marginBottom: 4,
   },
-  aiText: {
-    color: "#E2E8F0",
-  },
-  userText: {
-    color: "#FFFFFF",
+  timestamp: {
+    fontSize: 12,
+    color: "#666",
   },
 });
